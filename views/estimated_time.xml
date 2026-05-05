@@ -7,9 +7,9 @@
                 <field name="task_id"/>
                 <field name="date"/>
                 <field name="description"/>
-                <field name="time_taken"/>
+                <field name="time_taken" widget="float_time"/>
                 <field name="activity_type"/>
-                <field name="active"/>
+                <field name="active" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -21,21 +21,25 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>   
+                    <group>
                         <group string="General info.">
                             <field name="task_id"/>
                             <field name="date"/>
+                            <field name="active" invisible="1"/>
                         </group>
                         <group string="Additional info">
-                            <field name="description"/>
-                            <field name="time_taken"/>
+                            <field name="time_taken" widget="float_time"/>
                             <field name="activity_type"/>
                         </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1" placeholder="Activity description..."/>
+                    </group>
                 </sheet>
                 <div class="oe_chatter">
-                <field name="message_follower_ids"/>
-                <field name="activity_ids"/>
-                <field name="message_ids"/>
-                <field name="active" invisible="1"/>
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
                 </div>
             </form>
         </field>
@@ -46,8 +50,6 @@
         <field name="res_model">estimated.time</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-
 
     <menuitem
         id="estimated_time_view_menu"

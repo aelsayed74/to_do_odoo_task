@@ -1,0 +1,11 @@
+# Additional development dependencies
+# Note: Core Odoo dependencies are provided by the base Docker image
+
+python-docx>=0.8.10
+
+# Development tools
+black>=22.0
+pylint>=2.14.0
+flake8>=4.0.0
+pytest>=7.0.0
+pytest-cov>=3.0.0

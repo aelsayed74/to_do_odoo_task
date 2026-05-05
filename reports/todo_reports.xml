@@ -5,7 +5,7 @@
         <field name="report_type">qweb-pdf</field>    
         <field name="binding_model_id" ref="model_to_do"/>    
         <field name="binding_type">report</field>    
-        <field name="report_name">to_do.task_report_template</field>      
+        <field name="report_name">to_do_odoo_task.task_report_template</field>      
     </record>
 
     <template id="task_report_template">

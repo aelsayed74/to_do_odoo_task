@@ -24,30 +24,29 @@
         <field name="model">to.do</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="new_action" type="object" class="btn-primary" string="Set To New"
+                            attrs="{'invisible': [('status', '=', 'new')]}"/>
+                    <button name="in_progress_action" type="object" class="btn-secondary" string="Set To In Progress"
+                            attrs="{'invisible': [('status', '!=', 'new')]}"/>
+                    <button name="completed_action" type="object" class="btn-success" string="Set To Completed"
+                            attrs="{'invisible': [('status', '!=', 'in_progress')]}"/>
+                    <field name="status" widget="statusbar" statusbar_visible="new,in_progress,completed,close"/>
+                </header>
                 <sheet>
-                    <header>
-                        <button name="new_action" type="object" class="btn-primary" string="Set To New"
-                                invisible= "status =='new'"/>
-                        <button name="in_progress_action" type="object" class="btn-secondary" string="Set To In Progress"
-                                invisible= "status != 'new'"/>
-                        <button name="completed_action" type="object" class="btn-success" string="Set To Completed"
-                                invisible= "status != 'in_progress'"/>
-                        <field name="status" widget="statusbar"/>
-                    </header>    
-                        <group string="General info.">
-                            <field name="name"/>
-                            <field name="assign_to"/>
-                            <field name="description"/>
-                            <field name="active" invisible="1"/>
-                        </group>
-                        <group string="Additional info">
-                            <field name="due_date"/>
-                            <field name="expected_time"/>
-                            <field name="status"/>
-                            <field name="is_late"/>
-                            <field name="time_taken"/>
-                            <field name="remaining_time"/>
-                        </group>
+                    <group string="General info.">
+                        <field name="name"/>
+                        <field name="assign_to"/>
+                        <field name="description"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                    <group string="Additional info">
+                        <field name="due_date"/>
+                        <field name="expected_time"/>
+                        <field name="is_late" readonly="1"/>
+                        <field name="time_taken"/>
+                        <field name="remaining_time"/>
+                    </group>
 
                     <notebook>
                         <page string="Timesheets" name="timesheets">
@@ -63,11 +62,10 @@
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
-                <field name="message_follower_ids"/>
-                <field name="activity_ids"/>
-                <field name="message_ids"/>
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
                 </div>
-
             </form>
         </field>
     </record>
@@ -75,6 +73,7 @@
     <record id="action_todo_task" model="ir.actions.act_window">
         <field name="name">Tasks</field>
         <field name="res_model">to.do</field>
+        <field name="view_mode">tree,form</field>
     </record>
 
     <record id="to_do_search_view" model="ir.ui.view">
@@ -85,7 +84,7 @@
                 <field name="name"/>
                 <field name="assign_to"/>
                 <filter name="new" string="New" domain="[('status','=','new')]"/>
-                <filter name="in progress" string="In Porgress" domain="[('status','=','in_progress')]"/>
+                <filter name="in_progress" string="In Progress" domain="[('status','=','in_progress')]"/>
                 <filter name="completed" string="Completed" domain="[('status','=','completed')]"/>
                 <filter name="group_status" string="status" context="{'group_by':'status'}"/>
                 <filter name="group_assign_to" string="Assign to" context="{'group_by':'assign_to'}"/>
@@ -102,17 +101,6 @@
         <field name="code">
             action = records.close_action()    
         </field>
-    </record>
-
-    <record id="check_due_date_cron" model="ir.cron">
-        <field name="name">to_do: check due date</field>
-        <field name="model_id" ref="model_to_do"/>
-        <field name="state">code</field>
-        <field name="code">model.check_due_date()</field>
-        <field name="interval_number">1</field>
-        <field name="interval_type">days</field>
-        <field name="numbercall">-1</field>
-        <field name="active">True</field>
     </record>
 
     <menuitem

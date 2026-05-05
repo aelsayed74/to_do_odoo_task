@@ -12,16 +12,24 @@ class To_do(models.Model):
         ("new","New"),
         ("in_progress","In progress"),
         ("completed","Completed"),
-        ("close","Close"),])
+        ("close","Close"),], default="new", tracking=True)
     assign_to = fields.Many2one("res.users", string="Assign To")
     line_ids = fields.One2many("estimated.time","task_id")
     expected_time = fields.Float(string="Expected Time")
     time_taken = fields.Float(string="Time Taken", compute="_compute_time_taken",store=True)
     remaining_time = fields.Float(string="Remaining Time", compute="_compute_remaining_time")
     active = fields.Boolean(default=True)
-    is_late = fields.Boolean()
+    is_late = fields.Boolean(compute="_compute_is_late")
 
     
+    @api.depends('due_date')
+    def _compute_is_late(self):
+        for rec in self:
+            if rec.due_date and rec.due_date < fields.Datetime.now():
+                rec.is_late = True
+            else:
+                rec.is_late = False
+
     @api.depends('line_ids.time_taken')
     def _compute_time_taken(self):
         for rec in self:
@@ -53,13 +61,3 @@ class To_do(models.Model):
     def close_action(self):
         for rec in self:
             rec.status="close"
-            
-    def check_due_date(self):
-        todo_ids=self.search([])
-        print("todo_ids")
-        for rec in todo_ids:
-            print(rec)
-            if rec.due_date < fields.Datetime.now():
-                rec.is_late = True
-            else:
-                rec.is_late = False
