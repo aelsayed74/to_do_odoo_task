@@ -160,7 +160,7 @@ To-Do ──[N:1]──> Users (res.users)
 ### Module Features
 
 #### Core Task Management Requirements
-![Task Management Requirements](images/requirements_part1.png)
+![Task Management Requirements](images/task%201%20.png)
 
 **Key Features:**
 - **Lines**: Add field to `todo.task` model "estimated_time". Timesheet lines related to the task, allow users to record all their timesheets in this task. Make sure total times in related lines not exceed estimated time.
@@ -170,7 +170,7 @@ To-Do ──[N:1]──> Users (res.users)
 - **Report Action**: Users can print any task in a specified design.
 
 #### To-Do Module Configuration
-![To-Do Module Requirements](images/requirements_part2.png)
+![To-Do Module Requirements](images/task%202.png)
 
 **Core Components:**
 - **To-Do Model**: Create a new model named `todo.task` to represent tasks in the to-do list. Include fields such as Task Name, Assign To, Description, Due Date, and Status (New, In Progress, Completed).
