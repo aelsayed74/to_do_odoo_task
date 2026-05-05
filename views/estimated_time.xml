@@ -1,0 +1,58 @@
+<odoo>
+    <record id="estimated_time_view_tree" model="ir.ui.view">
+        <field name="name">estimated time tree view</field>
+        <field name="model">estimated.time</field>
+        <field name="arch" type="xml">
+            <tree class="header_custom">
+                <field name="task_id"/>
+                <field name="date"/>
+                <field name="description"/>
+                <field name="time_taken"/>
+                <field name="activity_type"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="estimated_time_view_form" model="ir.ui.view">
+        <field name="name">estimated time form view</field>
+        <field name="model">estimated.time</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>   
+                        <group string="General info.">
+                            <field name="task_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group string="Additional info">
+                            <field name="description"/>
+                            <field name="time_taken"/>
+                            <field name="activity_type"/>
+                        </group>
+                </sheet>
+                <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+                <field name="active" invisible="1"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_estimated_time" model="ir.actions.act_window">
+        <field name="name">Estimated Time</field>
+        <field name="res_model">estimated.time</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem
+        id="estimated_time_view_menu"
+        name="Estimated Time"
+        parent="tasks_menu"
+        action="action_estimated_time"
+    />
+</odoo>
